@@ -10,11 +10,6 @@ import (
 	"github.com/template/pkg/logger"
 )
 
-const (
-	maxHeaderBytes = 1 << 20
-	ctxTimeOut     = 5
-)
-
 type Server struct {
 	Cfg         *config.Config
 	Db          *sql.DB
@@ -23,8 +18,13 @@ type Server struct {
 	Logger      logger.Logger
 }
 
-func Run(*Server) *http.ServeMux {
+func Run(s *Server) *http.ServeMux {
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Server is running"))
+	})
+
+	
 	return mux
 }
